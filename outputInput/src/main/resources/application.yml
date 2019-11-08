@@ -1,0 +1,92 @@
+server:
+  port: 80
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    #引入druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/output_and_input?allowMultiQueries=true&useSSL=false&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: handsome123!
+  redis:
+    host: localhost
+    port: 6379
+    password: root
+    database: 0
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+       FAIL_ON_EMPTY_BEANS: true
+       write-dates-as-timestamps: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+  resources:
+    static-locations: classpath:/static
+  mvc:
+    static-path-pattern: /static/**
+  http:
+    multipart:
+      maxFileSize: 1000Mb
+      maxRequestSize: 100000Mb
+  servlet:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 100000MB
+cas:
+  client-name: CasRealm
+  server:
+    url: http://127.0.0.1:8080/admin
+  project:
+    url: http://127.0.0.1:8080
+#logging:
+#  level:
+#    root: INFO
+#    org.springframework.web: EOOROR
+#    org.mybatis: DEBUG
+#    org.apache.commons.dbcp2: DEBUG
+#  path: javabase/logs
+#  pattern:
+#    file: '%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n'
+#    console: '%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n'
+#字符串赋值提取到配置文件
+
+
+#config root logger
+#log4j:
+#  rootLogger: INFO,system.out
+#  appender:
+#     system.out: org.apache.log4j.ConsoleAppender
+#     layout: org.apache.log4j.PatternLayout
+#      ConversionPattern: MINAServer Logger-->%5p{%F:%L}-%m%n
+#
+#  #config this Project.file logger
+#  log4j.logger.thisProject.file=INFO,thisProject.file.out
+#  log4j.appender.thisProject.file.out=org.apache.log4j.DailyRollingFileAppender
+#  log4j.appender.thisProject.file.out.File=logContentFile.log
+#  log4j.appender.thisProject.file.out.layout=org.apache.log4j.PatternLayout
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+linux:
+  local: /code/freedomBoat/img/
+  online: http://39.100.107.142:8080/img/
+myComputer:
+  local: C:/Users/杜/Desktop/img/
+  online: http://39.100.107.142:8080/img/
+#
+#
+#mybatis-plus配置
+mybatis-plus:
+  type-aliases-package: com.zeus.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true  #自动开启驼峰规则映射
+
+
+
+
