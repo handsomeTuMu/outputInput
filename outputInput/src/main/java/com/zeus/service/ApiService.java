@@ -3,6 +3,9 @@ package com.zeus.service;
 import com.zeus.common.Response;
 import com.zeus.entity.Api;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zeus.entity.Example;
+
+import java.util.List;
 
 /**
  * <p>
@@ -48,4 +51,11 @@ public interface ApiService extends IService<Api> {
      * @return
      */
     Response forgetPassword( String phone, String code,String password);
+
+    /**
+     * 建表
+     * @param example
+     * @return
+     */
+    Response addTable(List<Example> example);
 }

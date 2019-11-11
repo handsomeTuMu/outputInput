@@ -31,14 +31,14 @@ public class Generator {
  //作者
  private static String authorName = "tumu";
  //要生成的表名
- private static String[] tables = {"tbl_api"};
+ private static String[] tables = {"tbl_cargo"};
  //table前缀
  private static String prefix = "tbl_";
  //数据库类型
  private static DbType dbType = DbType.MYSQL;
  //数据库配置四要素
  private static String driverName = "com.mysql.cj.jdbc.Driver";
- private static String url = "jdbc:mysql://localhost:3306/output_and_input?allowMultiQueries=true&useSSL=false&characterEncoding=utf-8&serverTimezone=UTC";
+ private static String url = "jdbc:mysql://120.27.25.104:3306/output_and_input?allowMultiQueries=true&useSSL=false&characterEncoding=utf-8&serverTimezone=UTC";
  private static String username = "root";
  private static String password = "handsome123!";
  public static void main(String[] args) {

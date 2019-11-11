@@ -1,17 +1,25 @@
 package com.zeus.service.impl;
 
+import com.alipay.api.domain.Car;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zeus.common.Response;
 import com.zeus.common.utils.PhoneUtil;
 import com.zeus.common.utils.RegexCheckUtil;
 import com.zeus.entity.Api;
 import com.zeus.dao.ApiMapper;
+import com.zeus.entity.Bill;
+import com.zeus.entity.Cargo;
+import com.zeus.entity.Example;
 import com.zeus.service.ApiService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zeus.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import java.lang.reflect.Method;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * <p>
@@ -145,4 +153,37 @@ public class ApiServiceImpl extends ServiceImpl<ApiMapper, Api> implements ApiSe
 
         return new Response(200,"修改密码成功");
     }
+
+    @Override
+    public Response addTable(List<Example> example) {
+        for(Example example1:example){
+            //插入数据
+//            Bill bill=(Bill)example1;
+//            bill.setCreateTime(new Timestamp(System.currentTimeMillis()));
+//            bill.insert();
+            for(Cargo cargo:example1.getCargoList()) {
+//                cargo.setBillId(bill.getBillId());
+//                cargo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+//                cargo.insert();
+
+                Class cargoClass = cargo.getClass();
+                for (int i = 1; i < 11; i++) {
+                    Integer value = 0;
+                    String b = "getValue" + i;
+                    try {
+                        Method method = cargoClass.getMethod(b, null);
+                        value = (Integer) method.invoke(cargo, new Object[]{});
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(value);
+
+                }
+
+            }
+
+        }
+        return  null;
+    }
+
 }

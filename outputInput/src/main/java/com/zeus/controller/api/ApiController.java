@@ -1,10 +1,14 @@
 package com.zeus.controller.api;
 
 import com.zeus.common.Response;
+import com.zeus.entity.Example;
 import com.zeus.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 /**
@@ -38,6 +42,14 @@ public class ApiController {
 
           return  apiService.forgetPassword(phone,code,password);
       }
+      
+  @PostMapping("/api/addTable")
+      public Response addTable(@RequestBody List<Example> example){
+
+          return apiService.addTable(example);
+      }
+
+
         
     
 }
