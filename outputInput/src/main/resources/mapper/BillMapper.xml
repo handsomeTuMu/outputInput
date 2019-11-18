@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zeus.dao.BillMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zeus.entity.Bill">
+        <id column="bill_id" property="billId" />
+        <result column="company_name" property="companyName" />
+        <result column="is_input" property="isInput" />
+        <result column="warehouse_keeper_name" property="warehouseKeeperName" />
+        <result column="customer_name" property="customerName" />
+        <result column="produce_name" property="produceName" />
+        <result column="unit" property="unit" />
+        <result column="warehourse_number" property="warehourseNumber" />
+        <result column="batch_number" property="batchNumber" />
+        <result column="wagon_number" property="wagonNumber" />
+        <result column="weight" property="weight" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        bill_id, company_name, is_input, warehouse_keeper_name, customer_name, produce_name, unit, warehourse_number, batch_number, wagon_number, weight, create_time, update_time
+    </sql>
+
+</mapper>

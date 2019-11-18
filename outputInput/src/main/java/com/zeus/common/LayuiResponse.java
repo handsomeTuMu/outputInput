@@ -24,6 +24,8 @@ public class LayuiResponse<T> {
      */
     private String msg;
 
+    private Long count;
+
 
     /**
      * 返回数据
@@ -72,6 +74,12 @@ public class LayuiResponse<T> {
         this.data = data;
     }
 
+    public LayuiResponse(int code,Long count, T data) {
+        this.code = code;
+        this.count = count;
+        this.data = data;
+    }
+
 
     /**
      * 返回成功信息
@@ -87,4 +95,5 @@ public class LayuiResponse<T> {
         this.msg = SUCCESS_MSG;
         this.data = data;
     }
+
 }

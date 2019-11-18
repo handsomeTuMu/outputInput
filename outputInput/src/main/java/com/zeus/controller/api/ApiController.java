@@ -2,12 +2,12 @@ package com.zeus.controller.api;
 
 import com.zeus.common.Response;
 import com.zeus.entity.Example;
+import com.zeus.entity.Example1;
 import com.zeus.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -44,10 +44,48 @@ public class ApiController {
       }
       
   @PostMapping("/api/addTable")
-      public Response addTable(@RequestBody List<Example> example){
-
-          return apiService.addTable(example);
+      public Response addTable(@RequestBody List<Example> example, HttpServletRequest request){
+          String token=request.getHeader("token");
+          return apiService.addTable(example,token);
       }
+
+    @PostMapping("/api/excelList")
+    public Response export(HttpServletRequest request, @RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "10") Integer size){
+        String token=request.getHeader("token");
+        return apiService.excelList(token,page,size);
+    }
+
+    @PostMapping("/api/delExcel")
+    public Response delExcel(HttpServletRequest request,Integer[] id){
+        String token=request.getHeader("token");
+        return apiService.delExcel(token,id);
+    }
+    @PostMapping("/api/excelDetail")
+    public Response excelDetail(HttpServletRequest request,Integer id){
+        String token=request.getHeader("token");
+        return apiService.excelDetail(token,id);
+    }
+
+    @PostMapping("/api/alterExcel")
+    public Response alterExcel(HttpServletRequest request, @RequestBody Example1 example1){
+        String token=request.getHeader("token");
+        return apiService.alterExcel(token,example1);
+    }
+
+    @PostMapping("/api/export")
+    public Response export(HttpServletRequest request,Integer id){
+        String token=request.getHeader("token");
+        return apiService.export(token,id);
+    }
+
+    @GetMapping("/error/lackParameter")
+    public Response lackParameter(){
+        return new Response(400,"缺少token");
+    }
+    @GetMapping("/error/tokenError")
+    public Response tokenError(){
+        return new Response(400,"token不存在或已过期");
+    }
 
 
         

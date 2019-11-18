@@ -86,6 +86,15 @@ public class Bill extends Model<Bill> {
      */
          private Timestamp updateTime;
 
+    private Integer excelId;
+
+    public Integer getExcelId() {
+        return excelId;
+    }
+
+    public void setExcelId(Integer excelId) {
+        this.excelId = excelId;
+    }
 
     public Integer getBillId() {
         return billId;

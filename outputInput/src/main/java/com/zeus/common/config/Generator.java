@@ -31,7 +31,7 @@ public class Generator {
  //作者
  private static String authorName = "tumu";
  //要生成的表名
- private static String[] tables = {"tbl_cargo"};
+ private static String[] tables = {"tbl_admin"};
  //table前缀
  private static String prefix = "tbl_";
  //数据库类型

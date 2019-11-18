@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zeus.dao.CargoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zeus.entity.Cargo">
+        <id column="cargo_id" property="cargoId" />
+        <result column="bill_id" property="billId" />
+        <result column="number" property="number" />
+        <result column="type" property="type" />
+        <result column="color" property="color" />
+        <result column="value1" property="value1" />
+        <result column="value2" property="value2" />
+        <result column="value3" property="value3" />
+        <result column="value4" property="value4" />
+        <result column="value5" property="value5" />
+        <result column="value6" property="value6" />
+        <result column="value7" property="value7" />
+        <result column="value8" property="value8" />
+        <result column="value9" property="value9" />
+        <result column="value10" property="value10" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        cargo_id, bill_id, number, type, color, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, create_time, update_time
+    </sql>
+
+</mapper>

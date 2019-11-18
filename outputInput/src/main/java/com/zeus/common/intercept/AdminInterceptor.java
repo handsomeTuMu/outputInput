@@ -17,9 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author XiaoLi
  */
 @Component
-public  class UserInterceptor implements HandlerInterceptor {
-	@Autowired
-	ApiMapper apiMapper;
+public  class AdminInterceptor implements HandlerInterceptor {
     @Autowired
 	RedisService redis;
 
@@ -27,21 +25,19 @@ public  class UserInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String token = request.getHeader("token");
-        String redisToken=redis.getString(token);
-		if(token==null) {
-			response.sendRedirect("/error/lackParameter");
-				return false;
-		}else {
-			if(redisToken==null||"".equals(redisToken)){
-				Api api=apiMapper.selectOne(new QueryWrapper<Api>().eq("token",token));
-				if(api==null) {
-					response.sendRedirect("/error/tokenError");
-					return false;
-				}
-			}
 
-			return true;
+		if(token==null) {
+			response.sendRedirect("/timeout");
+				return false;
 		}
+		String redisToken=redis.getString(token);
+
+			if(redisToken==null||"".equals(redisToken)){
+				response.sendRedirect("/timeout");
+					return false;
+			}
+			return true;
+
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.zeus.common.Response;
 import com.zeus.entity.Api;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zeus.entity.Example;
+import com.zeus.entity.Example1;
 
 import java.util.List;
 
@@ -57,5 +58,46 @@ public interface ApiService extends IService<Api> {
      * @param example
      * @return
      */
-    Response addTable(List<Example> example);
+    Response addTable(List<Example> example,String token);
+
+    /**
+     * 历史单据
+     * @param token
+     * @param page
+     * @param size
+     * @return
+     */
+    Response excelList(String token, Integer page, Integer size);
+
+    /**
+     * 删除表单
+     * @param token
+     * @param id
+     * @return
+     */
+    Response delExcel(String token, Integer[] id);
+
+    /**
+     * 查看内容详情
+     * @param token
+     * @param id
+     * @return
+     */
+    Response excelDetail(String token, Integer id);
+
+    /**
+     * 修改数据
+     * @param token
+     * @param example1
+     * @return
+     */
+    Response alterExcel(String token, Example1 example1);
+
+    /**
+     * 将数据库里的数据转换成excel
+     * @param token
+     * @param id
+     * @return
+     */
+    Response export(String token, Integer id);
 }

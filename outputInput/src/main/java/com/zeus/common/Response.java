@@ -24,6 +24,8 @@ public class Response<T> {
      */
     private String msg;
 
+    private Long count;
+
 
     /**
      * 返回数据
@@ -68,6 +70,13 @@ public class Response<T> {
 
     public Response(int status, String msg, T data) {
         this.status = status;
+        this.msg = msg;
+        this.data = data;
+    }
+
+    public Response(int status, Long count,String msg, T data) {
+        this.status = status;
+        this.count=count;
         this.msg = msg;
         this.data = data;
     }

@@ -21,4 +21,22 @@ public class Example  extends Bill{
 
       private List<Cargo> cargoList;
 
+      public Example() {
+      }
+      public Example(Bill bill) {
+            this.setWeight(bill.getWeight());
+            this.setWagonNumber(bill.getWagonNumber());
+            this.setWarehourseNumber(bill.getWarehourseNumber());
+            this.setWarehouseKeeperName(bill.getWarehouseKeeperName());
+            this.setBatchNumber(bill.getBatchNumber());
+            this.setUnit(bill.getUnit());
+            this.setProduceName(bill.getProduceName());
+            this.setCustomerName(bill.getCustomerName());
+            this.setIsInput(bill.getIsInput());
+            this.setCompanyName(bill.getCompanyName());
+            this.setCreateTime(bill.getCreateTime());
+            this.setExcelId(bill.getExcelId());
+            this.setBillId(bill.getBillId());
+            this.setUpdateTime(bill.getUpdateTime());
+      }
 }

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>自在舟后台管理系统</title>
+    <link rel="stylesheet" href="../static/layuiadmin/layui/css/layui.css"  media="all">
+    <!--<link rel="stylesheet" href="../static/layuiadmin/style/admin.css" media="all">-->
+</head>
+<body>
+
+<!--        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">-->
+<!--            <legend>查找用户</legend>-->
+<!--        </fieldset>-->
+<!--        <div class="layui-input-inline" style="float: left" >-->
+<!--            <input id="phone" lay-verify="title" autocomplete="off"  class="layui-input" type="text">-->
+<!--        </div>-->
+<!--            <div class="layui-btn-container" style="float: left">-->
+<!--                <button class="layui-btn layui-btn-sm" onclick="test()" lay-filter="demo1" >查找</button>-->
+<!--            </div>-->
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;clear: both">
+            <legend>用户列表</legend>
+        </fieldset>
+        <table class="layui-hide" id="test0" lay-filter="test0"  align="left"></table>
+
+        <div id="add-main" style="display: none;">
+
+            <form class="layui-form" id="add-form" action="">
+                <input id="userId" name="id" hidden="hidden" >
+                <div class="layui-form-item center" >
+                    <label class="layui-form-label">禁用天数</label>
+                    <div class="layui-input-block">
+                        <input id="day" name="day" type="text" style="width: 150px" required value=""  lay-verify="required" placeholder="选择禁用天数" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item center" >
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="ban" id="ban" >确定</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">查看勋章和发布</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用/解禁</a>
+</script>
+
+<script src="../static/layuiadmin/layui/layui.js" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use(['table','layer','laydate','form','upload','element','laypage'], function(){
+        var table = layui.table
+            ,layer=layui.layer
+            ,$=layui.$
+            ,form=layui.form;
+        var admin = layui.data("adminData").admin;
+
+        table.render({
+            elem: '#test0',
+            url: '/admin/getUser',
+            headers:{"token":admin.token},
+            cellMinWidth: 60,
+            // toolbar:'#toolbar',
+            cols: [
+                [
+                    {field: 'username', width: 130, title: '账号'}
+                    , {field: 'password', width: 284, title: '密码'}
+                    ,{field:'createTime', width:170, title: '注册时间',sort:true,
+                    templet: function (d) {
+                        console.log(d.createTime);
+                        var date = new Date(d.createTime);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+                        var Y = date.getFullYear() + '-';
+                        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+                        var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+                        var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+                        var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
+                        var s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds());
+                        return Y+M+D+h+m+s;
+                    }},
+                    ,{field:'updateTime', width:163, title: '更新时间',sort:true
+                    , templet: function (d) {
+                        if(d.updateTime!=null&&d.updateTime!="") {
+                            var date = new Date(d.updateTime);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+                            var Y = date.getFullYear() + '-';
+                            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                            var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
+                            var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+                            var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+                            var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+                            if ((Y + M + D + h + m + s) == "1970-01-01 08:00:00" || (Y + M + D + h + m + s) == "1970-01-01 08:00:01") {
+                                return "";
+                            }
+                            return Y + M + D + h + m + s;
+                        }else{
+                            return "";
+                        }
+                    }
+                    }
+                    // , {fixed: 'right', title: '操作', width: 219, toolbar: '#barDemo'}
+                ]
+            ]
+            , parseData: function (res) {
+                return {
+                    "code": 0,
+                    "msg": res.msg,
+                    "count": res.count,
+                    "data": res.data
+                };
+
+
+            }
+            ,page:true
+        });
+        window.show_img=function (t) {
+            var t = $(t).find("img");
+            //页面层
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['60%', '80%'], //宽高
+                shadeClose: true, //开启遮罩关闭
+                content:
+                    '<div align="center" style="height: 100%" ;>' +
+                    '<img src="' + $(t).attr('src') + '" style="top: 50%;left: 50%;transform: translate(-50%,-50%);position: absolute" />'
+                  +  '</div>'
+            });
+        };
+        form.on('submit(ban)', function(data){
+
+            $.ajax({
+                url:"/admin/banUser",
+                type:"post",
+                data:{"userId":data.field.id,"day":data.field.day},
+                success:function(res){
+                    alert(res.msg);
+                    layer.closeAll();
+                    $(".layui-laypage-btn").click();
+                }
+            });
+            return false;
+        });
+        table.on('tool(test0)', function(obj){
+            var data = obj.data;
+            console.log(data);
+            document.getElementById("userId").value=data.phone;
+            if(obj.event === 'del'){
+                if(data.status==1){
+                    layer.open({
+                        type: 1
+                        ,offset: 'auto' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                        ,id: 'layerDemo' //防止重复弹出
+                        ,content: '<div style="padding: 20px 100px;">'+ "确定解禁吗" +'</div>'
+                        ,btn: ['确定', '取消']
+                        ,btnAlign: 'c' //按钮居中
+                        ,shade: 0 //不显示遮罩
+                        ,yes: function(){
+                            $.ajax({
+                                url:"/admin/removeBan",
+                                type:"post",
+                                data:{"id":data.phone},
+                                success:function(res){
+                                    alert(res.msg);
+                                    layer.closeAll();
+                                    $(".layui-laypage-btn").click();
+                                }
+                            });
+                        }
+                    });
+                }else{
+                layer.open({
+                    type: 1,
+                    title: "选择禁用天数",
+                    closeBtn: 1,
+                    shift: 2,
+                    area: ['350px', '150px'],
+                    shadeClose: true,
+                    content: $("#add-main"),
+                    success: function (layero, index) {
+                    },
+                    yes: function () {
+                    }
+                });}
+            } else if(obj.event === 'edit'){
+                // window.location.href("/admin/addNewStudyRoom?id=1");
+                  post("/admin/userBadge?id="+data.id,data);
+            }
+        });
+
+
+        $('input').bind('input propertychange', function() {
+            //进行相关操作
+        });
+
+    });
+</script>
+</body>
+</html>
+          

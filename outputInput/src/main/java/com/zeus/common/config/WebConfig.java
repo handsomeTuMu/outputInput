@@ -1,5 +1,8 @@
 package com.zeus.common.config;
 
+import com.zeus.common.intercept.AdminInterceptor;
+import com.zeus.common.intercept.UserInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -20,10 +23,10 @@ import java.util.List;
  **/
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
-//    @Autowired
-//    private UserInterceptor loginInterceptor;
-//    @Autowired
-//    private AdminInterceptor adminInterceptor;
+    @Autowired
+    private UserInterceptor loginInterceptor;
+    @Autowired
+    private AdminInterceptor adminInterceptor;
     @Bean
     public HttpMessageConverter<String> responseBodyConverter() {
         StringHttpMessageConverter converter = new StringHttpMessageConverter(
@@ -46,17 +49,35 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/**").addResourceLocations("file:///code/freedomBoat/img/");
+        registry.addResourceHandler("/file/**").addResourceLocations("file:///code/tumu/file/user/");
 
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> userExcludes = new LinkedList<>();
-
+        userExcludes.add("/api/login");
+        userExcludes.add("/api/register");
+        userExcludes.add("/api/getCode");
+        userExcludes.add("/api/forgetPassword");
+        userExcludes.add("/error/lackParameter");
+        userExcludes.add("/error/tokenError");
+        userExcludes.add("/file/**");
+        userExcludes.add("/");
+        userExcludes.add("/static/**");
+        userExcludes.add("/admin/**");
         //静态文件
-//        registry.addInterceptor(loginInterceptor).excludePathPatterns(userExcludes.toArray(new String[userExcludes.size()]))
-//                .addPathPatterns("/**");
+        registry.addInterceptor(loginInterceptor).excludePathPatterns(userExcludes.toArray(new String[userExcludes.size()]))
+                .addPathPatterns("/**");
+        List<String> adminExcludes = new LinkedList<>();
+        adminExcludes.add("/admin/login");
+        adminExcludes.add("/admin/index");
+        adminExcludes.add("/admin/userSelect");
+        adminExcludes.add("/admin/adminInfo");
+        adminExcludes.add("/admin/password");
+//        adminExcludes.add("/admin/getUser");
+        registry.addInterceptor(adminInterceptor).excludePathPatterns(adminExcludes.toArray(new String[adminExcludes.size()]))
+                .addPathPatterns("/admin/**");
 
     }
 
