@@ -57,6 +57,14 @@ public class RedisService {
 	public void expire(String key, int seconds) {
 		template.expire(key, seconds, TimeUnit.SECONDS);
 	}
+
+	/**
+	 * 删除key
+	 * @param key 键
+	 */
+	public void delete(String key){
+		template.delete(key);
+	}
 	
 	
 }

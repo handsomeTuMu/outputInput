@@ -71,8 +71,9 @@ public class ApiServiceImpl extends ServiceImpl<ApiMapper, Api> implements ApiSe
 
         String md5Key = phone + System.currentTimeMillis();
         String token = DigestUtils.md5DigestAsHex(md5Key.getBytes()) + System.currentTimeMillis();
+        redis.delete(api.getToken());
         redis.set(token,token);
-        redis.expire(token,7*24*3600);
+        redis.expire(token,3*24*3600);
         api.setToken(token);
         api.updateById();
         api.setPassword(null);
